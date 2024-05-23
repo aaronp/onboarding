@@ -87,3 +87,5 @@ out/
 # SvelteKit specific (if applicable)
 .svelte-kit/
 .svelte/
+
+*storybook.log
