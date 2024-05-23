@@ -21,3 +21,8 @@ npm install -g n
 sudo n latest
 nvm use node
 ```
+
+# Storybook
+
+I followed [these instructions](https://chatgpt.com/share/49c7aadd-c5de-4686-b519-180d8f0d6e39)
+and then accepted the doctor defaults suggested when I ran `npm storybook`
