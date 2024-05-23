@@ -1,4 +1,4 @@
-import SelectDropdown from '../components/SelectDropdown.svelte';
+import SelectDropdown from '../lib/SelectDropdown.svelte';
 
 export default {
   title: 'Components/SelectDropdown',

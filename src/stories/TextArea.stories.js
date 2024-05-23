@@ -1,4 +1,4 @@
-import TextArea from '../components/TextArea.svelte';
+import TextArea from '../lib/TextArea.svelte';
 
 export default {
   title: 'Components/TextArea',

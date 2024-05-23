@@ -1,4 +1,4 @@
-import InputField from '../components/InputField.svelte';
+import InputField from '../lib/InputField.svelte';
 
 export default {
   title: 'Components/InputField',

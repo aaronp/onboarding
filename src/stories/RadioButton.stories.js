@@ -1,4 +1,4 @@
-import RadioButton from '../components/RadioButton.svelte';
+import RadioButton from '../lib/RadioButton.svelte';
 
 export default {
   title: 'Components/RadioButton',
