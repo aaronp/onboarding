@@ -1,6 +1,7 @@
 {
-	"name": "my-svelte-app",
+	"name": "@aaronp/onboarding",
 	"version": "0.0.1",
+	"description": "A svelte library for onboarding new clients",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -12,6 +13,12 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write ."
 	},
+	"repository": {
+	  "type": "git",
+	  "url": "https://github.com/aaronp/onboarding.git"
+	},
+	"author": "Aaron Pritzlaff <aaron@kindservices.co.uk>",
+	"license": "Apache-2.0",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -46,5 +53,8 @@
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"type": "module"
+	"type": "module",
+	"publishConfig": {
+	  "registry": "https://npm.pkg.github.com"
+	}
 }
