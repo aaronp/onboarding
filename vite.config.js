@@ -13,6 +13,8 @@ export default defineConfig({
 	  rollupOptions: {
 		external: ['svelte'],
 		output: {
+	      inlineDynamicImports:false,
+		  format: 'esm',
 		  globals: {
 			svelte: 'svelte'
 		  }
