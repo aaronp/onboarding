@@ -30,3 +30,22 @@ Note: if npm reminds you that it sucks (e.g. the following):
 sudo n latest
 nvm use node
 ```
+
+# Using the service
+
+At this point we can just do this:
+
+
+```javascript
+// Inside your Vite project
+import { createService } from 'main';
+
+// Use the function
+var service = createService();
+```
+
+Which returns one of these badgers:
+
+```scala
+case class Services(handler: OnboardingImpl.InMemory, app: Onboarding.App)
+```
