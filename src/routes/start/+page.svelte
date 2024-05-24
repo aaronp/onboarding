@@ -1,4 +1,12 @@
+<script type="module">
+  import { createService } from '$lib/service.js';
+  var svc = createService();
+
+
+</script>
 <h2>I want to onboard</h2>
+
+service is {svc}
 
 <h3>Basic Information</h3>
 <form>
