@@ -5,10 +5,11 @@ import adapter from '@sveltejs/adapter-static';
 // base should be https://aaronp.github.io/static-svelte
 
 //
-// base: '/sveltekit-gh-pages',
+// 
 const config = {
     kit: {
 		paths: {
+			base: '/sveltekit-gh-pages',
 		},
 		adapter: adapter({
 			fallback: '404.html',
