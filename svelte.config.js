@@ -4,16 +4,19 @@ import adapter from '@sveltejs/adapter-static';
 // for gh-pages hosting
 // base should be https://aaronp.github.io/static-svelte
 
-//
-// 
+
+const dev = process.env.NODE_ENV === 'development';
+
+
 const config = {
     kit: {
 		paths: {
 			// base: '/sveltekit-gh-pages',
-            base: process.env.NODE_ENV === 'production' ? '/sveltekit-github-pages' : '',
+			// /onboarding
+            base: dev ? '' : '',
 		},
 		adapter: adapter({
-			fallback: '{base}/404.html',
+			fallback: '404.html',
 			pages: 'build',
 			assets: 'build',
 			precompress: false,
