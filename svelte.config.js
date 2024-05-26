@@ -13,7 +13,7 @@ const config = {
             base: process.env.NODE_ENV === 'production' ? '/sveltekit-github-pages' : '',
 		},
 		adapter: adapter({
-			fallback: '404.html',
+			fallback: '{base}/404.html',
 			pages: 'build',
 			assets: 'build',
 			precompress: false,

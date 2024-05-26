@@ -44,6 +44,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
+    # for more about publishing to gh pages, see https://www.okupter.com/blog/deploy-sveltekit-website-to-github-pages
     steps:
       - name: Deploy
         id: deployment-gh-pages
