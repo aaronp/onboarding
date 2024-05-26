@@ -1,4 +1,8 @@
+<script>
+	import { base } from '$app/paths'
+</script>
+
 Here we list the supporting documents
 
 
-<a href="/summary">latest submission</a>
+<a href="{base}/summary">latest submission</a>

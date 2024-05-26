@@ -13,7 +13,8 @@ const config = {
 		paths: {
 			// base: '/sveltekit-gh-pages',
 			// /onboarding
-            base: dev ? '' : '',
+            base: dev ? '' : '/onboarding',
+			// base: '/onboarding'
 		},
 		adapter: adapter({
 			fallback: '404.html',

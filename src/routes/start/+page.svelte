@@ -1,6 +1,6 @@
 <script type="module">
   import { createService } from '$lib/service.js';
-
+  import { base } from '$app/paths'
   import { onMount } from 'svelte';
 
   let service;
@@ -24,4 +24,4 @@
   <input type="email" id="email" name="email" required>
 </form>
 
-<a href="/dashboard">submit</a>
+<a href="{base}/dashboard">submit</a>
