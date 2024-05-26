@@ -11,10 +11,7 @@ const dev = process.env.NODE_ENV === 'development';
 const config = {
     kit: {
 		paths: {
-			// base: '/sveltekit-gh-pages',
-			// /onboarding
             base: dev ? '' : '/onboarding',
-			// base: '/onboarding'
 		},
 		adapter: adapter({
 			fallback: '404.html',

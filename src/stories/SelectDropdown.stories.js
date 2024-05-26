@@ -17,15 +17,15 @@ Default.args = {
   options: [
     {
       'value': '1',
-      'text': 'One'
+      'label': 'One'
     },
     {
       'value': '2',
-      'text': 'Two'
+      'label': 'Two'
     },
     {
       'value': '3',
-      'text': 'Three'
+      'label': 'Three'
     }
   ],
   placeholder: 'Select one..',

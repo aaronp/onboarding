@@ -2,6 +2,9 @@
   import { createService } from '$lib/service.js';
   import { base } from '$app/paths'
   import { onMount } from 'svelte';
+  import InputField from '$lib/InputField.svelte';
+  import TextArea from '$lib/TextArea.svelte';
+  import SelectDropdown from '$lib/SelectDropdown.svelte';
 
   let service;
 
@@ -9,6 +12,42 @@
   onMount(() => {
     service = createService();
   });
+
+
+  export let options = [
+    { 'label': 'Option 1', 'value': 'option1' },
+    { 'label': 'Option 2', 'value': 'option2' },
+    { 'label': 'Option 3', 'value': 'option3' }
+  ];
+
+  // Define the variables to bind to the form inputs
+  let name = '';
+  let about = '';
+  let info2 = '';
+  let info3 = '';
+  let description = '';
+  let useProd = false;
+
+  $: formData = {
+    about,
+    name,
+    info2,
+    info3,
+    description,
+    useProd
+  };
+
+ $: formJson = JSON.stringify(formData, null, 2);
+
+  // Function to handle form submission
+  function handleSubmit(event) {
+    event.preventDefault();
+
+
+    // Log the JSON object to the console (or send it to an API)
+    console.log(JSON.stringify(formData));
+
+  }
 </script>
 
 <main>
@@ -17,11 +56,35 @@
 
 
 <h3>Basic Information</h3>
-<form>
-  <label for="name">Name</label>
-  <input type="text" id="name" name="name" required>
-  <label for="email">Email</label>
-  <input type="email" id="email" name="email" required>
+
+<form on:submit|preventDefault={handleSubmit}>
+  
+  <InputField label="Name:" bind:value={name} />
+  <InputField label="About:" bind:value={about} />
+  <SelectDropdown label="Values:" bind:options={options} />
+
+  <button type="submit">Submit</button>
+</form>
+<hr />
+<form on:submit|preventDefault={handleSubmit} class="form-grid">
+  <InputField label="More Info" placeholder="More Info" bind:value={info2} />
+  <InputField label="Additional Info" placeholder="And Again" bind:value={info3} />
 </form>
 
-<a href="{base}/dashboard">submit</a>
+<a href="{base}/dashboard">next</a>
+
+<p >{formJson}</p>
+
+
+<style>
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
