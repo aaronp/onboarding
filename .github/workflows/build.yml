@@ -2,44 +2,54 @@ name: Build And Publish
 
 on:
   push:
-    branches:
-      - "main"
+    branches: "*"
 
 jobs:
-  build:
+  build_site:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    strategy:
-      matrix:
-        node-version: [18.13.0] # Adjust the Node.js versions as needed
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: build
+        env:
+          BASE_PATH: '/${{ github.event.repository.name }}'
+        run: |
+          npm run build
+
+      - name: Upload Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # this should match the `pages` option in your adapter-static options
+          path: 'build/'
+
+  deploy:
+    needs: build_site
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      contents: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Configure npm for GitHub Packages
-      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}" > ~/.npmrc
-  
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build project
-      run: npm run build
-
-    # - name: Publish to GitHub Packages
-    #   if: github.ref != 'refs/heads/maindebug'
-    #   run: npm publish
-    #   env:
-    #     NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: build
-        path: public # Adjust the path if your build output is different
-  
+      - name: Deploy
+        id: deployment-gh-pages
+        uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/
