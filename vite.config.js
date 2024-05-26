@@ -4,21 +4,10 @@ import path from 'path';
 
 export default defineConfig({
 	plugins: [sveltekit()],
-	build: {
-	  lib: {
-		entry: path.resolve(__dirname, 'src/index.js'),
-		name: 'OnBoardingLib',
-		fileName: (format) => `onboarding-lib.${format}.js`
-	  },
-	  rollupOptions: {
-		external: ['svelte'],
-		output: {
-	      inlineDynamicImports:false,
-		  format: 'esm',
-		  globals: {
-			svelte: 'svelte'
-		  }
-		}
-	  }
+	resolve: {
+		alias: {
+			$lib: path.resolve(__dirname, 'src/lib'),
+			$backend: path.resolve(__dirname, '../onboarding-backend/js/target/scala-3.4.1/app-fastopt'),
+		},
 	}
   });
