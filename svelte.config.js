@@ -1,12 +1,22 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-static';
 
-/** @type {import('@sveltejs/kit').Config} */
+// see https://kit.svelte.dev/docs/adapter-static 
+// for gh-pages hosting
+// base should be https://aaronp.github.io/static-svelte
+
+//
+// base: '/sveltekit-gh-pages',
 const config = {
-	kit: {
-		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
-		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
-		adapter: adapter()
+    kit: {
+		paths: {
+		},
+		adapter: adapter({
+			fallback: '404.html',
+			pages: 'build',
+			assets: 'build',
+			precompress: false,
+			strict: true
+		})
 	}
 };
 

@@ -6,3 +6,9 @@ link: build # used to reference this repo from the host app repo for local devel
 	npm link
 storybook:
 	npm run storybook
+latestNode:
+	sudo n latest
+	nvm use node
+buildServer:
+	cd ../onboarding-backend
+	sbt "project appJS" fastLinkJS

@@ -1,9 +1,21 @@
 <script type="module">
   import { createService } from '$lib/service.js';
-  var svc = createService();
 
+  import { onMount } from 'svelte';
 
+  let service;
+
+  // Create the service when the component is mounted
+  onMount(() => {
+    service = createService();
+  });
 </script>
+
+<main>
+  <p>Service has been created: {service ? 'Yes' : 'No'}</p>
+</main>
+
+
 <h2>I want to onboard</h2>
 
 service is {svc}
