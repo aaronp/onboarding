@@ -7,7 +7,8 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			$lib: path.resolve(__dirname, 'src/lib'),
-			$backend: path.resolve(__dirname, '../onboarding-backend/js/target/scala-3.4.1/app-fastopt'),
+			$localbackend: path.resolve(__dirname, '../onboarding-backend/js/target/scala-3.4.1/app-fastopt'),
+			$backend: path.resolve(__dirname, 'backend'),
 		},
 	}
   });
