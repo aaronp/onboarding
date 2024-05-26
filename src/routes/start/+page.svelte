@@ -1,5 +1,6 @@
 <script type="module">
   import { createService } from '$lib/service.js';
+  import { goto } from '$app/navigation';
   import { base } from '$app/paths'
   import { onMount } from 'svelte';
   import InputField from '$lib/InputField.svelte';
@@ -21,6 +22,7 @@
   ];
 
   // Define the variables to bind to the form inputs
+  let messages = '';
   let name = '';
   let about = '';
   let info2 = '';
@@ -47,6 +49,9 @@
     // Log the JSON object to the console (or send it to an API)
     console.log(JSON.stringify(formData));
 
+    var result = service.submitOnboardingForm(formJson);
+    messages = `result was ${result}, which is ${typeof(result)}`;
+    // goto('/submitted');
   }
 </script>
 
@@ -74,7 +79,7 @@
 <a href="{base}/dashboard">next</a>
 
 <p >{formJson}</p>
-
+<p>{messages}</p>
 
 <style>
   .form-grid {

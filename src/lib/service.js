@@ -1,5 +1,7 @@
 // NOTE: change this to localbackend for local development
 //
+// see vite.config.js for declarations of $localbackend and $backend
+//
 // ======  FOR BACKEND DEV ====== 
 // in this case we're making backend changes and want that
 // immediate feedback in the UI

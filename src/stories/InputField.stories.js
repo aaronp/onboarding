@@ -14,5 +14,6 @@ export const Default = Template.bind({});
 Default.args = {
   label: 'Name',
   value: '',
+  errorMessage: '',
   placeholder: 'Enter your name',
 };
