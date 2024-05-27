@@ -19,15 +19,30 @@
 
 
 <style>
-    .navbar {
+   .navbar {
+        grid-area: nav;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         padding: 1rem;
         background-color: #333;
         color: white;
+        height: 90%;
     }
+
     .nav-links {
         display: flex;
+        flex-direction: column;
         gap: 1rem;
+    }
+
+    .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 0;
+    }
+
+    .nav-links a:hover {
+        background-color: #444;
     }
 </style>
