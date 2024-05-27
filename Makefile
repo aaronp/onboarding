@@ -13,6 +13,13 @@ latestNode:
 	nvm use node
 buildServer:
 	cd ../onboarding-backend && sbt "project appJS" fastLinkJS
+
+publish: setForGithubPages copyServer
+
+setLocalDevelopment:
+	./setLocalDevelopment.sh
+setForGithubPages:
+	./setForGithubPages.sh
 # this takes a snapshot of the (assumed) peer backend project 
 # the ./src/service.js should then also be updated to this import:
 # import { createService } from '$backend/main.mjs';
