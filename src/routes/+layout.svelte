@@ -26,6 +26,7 @@
         grid-template-rows: auto 1fr auto;
         grid-template-columns: 200px 1fr;
         height: 100vh;
+        margin: 0;
     }
 
     main {
