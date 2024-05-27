@@ -1,40 +1,36 @@
 <script type="module">
-  import { createService } from '$lib/service.js';
+  import { appBackend } from '$lib/stores/backend.js';
   import { goto } from '$app/navigation';
+  import PrivateFund from '$lib/assets/PrivateFund.svelte';
+  import Bond from '$lib/assets/Bond.svelte';
   import { base } from '$app/paths'
   import { onMount } from 'svelte';
   import InputField from '$lib/InputField.svelte';
   import TextArea from '$lib/TextArea.svelte';
   import SelectDropdown from '$lib/SelectDropdown.svelte';
 
+	export let data;
+  let selectedAsset;
   let service;
-
-  // Create the service when the component is mounted
-  onMount(() => {
-    service = createService();
+  
+  // Subscribe to the store
+  appBackend.subscribe(value => {
+    service = value;
   });
 
-
-  export let options = [
-    { 'label': 'Option 1', 'value': 'option1' },
-    { 'label': 'Option 2', 'value': 'option2' },
-    { 'label': 'Option 3', 'value': 'option3' }
-  ];
+  export let assets = data.assets;
 
   // Define the variables to bind to the form inputs
   let messages = '';
   let name = '';
   let about = '';
-  let info2 = '';
-  let info3 = '';
   let description = '';
   let useProd = false;
 
   $: formData = {
+    selectedAsset,
     about,
     name,
-    info2,
-    info3,
     description,
     useProd
   };
@@ -66,21 +62,24 @@
   
   <InputField label="Name:" bind:value={name} />
   <InputField label="About:" bind:value={about} />
-  <SelectDropdown label="Values:" bind:options={options} />
+  <SelectDropdown label="Values:" bind:options={assets} bind:value={selectedAsset} />
 
   <button type="submit">Submit</button>
 </form>
 <hr />
-<form on:submit|preventDefault={handleSubmit} class="form-grid">
-  <InputField label="More Info" placeholder="More Info" bind:value={info2} />
-  <InputField label="Additional Info" placeholder="And Again" bind:value={info3} />
-</form>
 
 <a href="{base}/dashboard">next</a>
+
+{#if selectedAsset === 'Private Fund'}
+<PrivateFund />
+{:else if selectedAsset === 'Bond'}
+<Bond />
+{/if}
 
 <p >{formJson}</p>
 <p>{messages}</p>
 
+<!-- see https://www.w3schools.com/cssref/tryit.php?filename=trycss_play_grid-template-areas -->
 <style>
   .form-grid {
     display: grid;
@@ -90,6 +89,10 @@
   .form-group {
     display: flex;
     flex-direction: column;
+  }
+  .form-grid select {
+    width: 100%; /* Make all input and select elements take the full width of their grid cell */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
   }
 </style>
 

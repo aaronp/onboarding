@@ -5,14 +5,13 @@
   export let label = "";
   export let options = [];
   export let value = "";
-  export let onChange;
 </script>
 
 <div class="form-group">
   {#if label}
     <label for={inputId}>{label}</label>
   {/if}
-  <select id={inputId} bind:value on:change={onChange}>
+  <select id={inputId} bind:value >
     {#each options as option}
       <option value={option.value}>{option.label}</option>
     {/each}
@@ -32,5 +31,13 @@
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+  }
+
+  select {
+    color: var(--fg-1);
+  }
+
+  select option {
+    color: var(--fg-1); /* This may not work consistently across all browsers */
   }
 </style>

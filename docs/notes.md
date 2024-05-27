@@ -1,4 +1,9 @@
+[home](../README.md)
 # Notes
+
+I've tried to track different decisions as I went along here:
+
+ * [Approach to services](./services.md)
 
 ## Local Development
 
