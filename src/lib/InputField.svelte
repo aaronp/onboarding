@@ -12,7 +12,7 @@
 
   function onChange(event) {
     value = event.target.value;
-    dispatch('update', value);
+    dispatch('onUpdate', value);
   }  
 </script>
 
