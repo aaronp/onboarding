@@ -8,13 +8,12 @@ appBackend.subscribe(value => {
 });
 
 export async function load({ fetch }) {
+    const allUsers = service.listUsers();
+
+    console.log("allUsers", allUsers);
 
     return {
-        users: [
-            { 'label': 'Aaron', 'value' : 'Aaron' },
-            { 'label': 'Georgina', 'value' : 'Georgina' },
-            { 'label': 'Eleanor', 'value' : 'Eleanor' },
-            { 'label': 'Jayne', 'value' : 'Jayne' }
-        ]
+        service : service,
+        users: allUsers
     };
 }

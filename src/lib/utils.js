@@ -7,3 +7,14 @@ export function generateUUID() {
     });
   }
   
+  export function asLableValue(input) {
+    // Check if input is an object and has 'label' and 'value' keys
+    if (typeof input === 'object' && input !== null && 'label' in input && 'value' in input) {
+        return input;
+    }
+    
+    return {
+      label: input,
+      value: input
+    };
+  }

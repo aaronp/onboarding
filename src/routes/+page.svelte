@@ -5,6 +5,7 @@
 	let createNewUserClicked= false;
 	let selectedUser = {};
 	let doLogIn = false;
+	let result = {};
 	export let data;
 
 	let newUserData = {};
@@ -13,17 +14,16 @@
 	$: debug = createNewUserClicked;
 
 	function onCancelNewUser() {
-		console.log("cancel");
 		createNewUserClicked = false;
 	}
 	function onCreateNewUser() {
-		console.log("cancel");
 		createNewUserClicked = true;
 	}
 
 	function onAddUser(event) {
 		createNewUserClicked = false;
 		newUserData = event.detail;
+		result = data.service.createNewUser(JSON.stringify(newUserData));
 	}
 
 	function logUserIn(newValue) {
@@ -31,6 +31,9 @@
 	}
 </script>
 <p>doLogIn = {doLogIn} with {selectedUser}</p>
+newUserDataJson is <pre>{newUserDataJson}</pre>
+<p>service is {data.service}</p>
+<p>save result  is {result}</p>
 <div class="centered-div">
 
 	{#if createNewUserClicked}
@@ -44,7 +47,6 @@
 	    <p>or</p>
 		<button on:click={onCreateNewUser}>Create New User</button>
 	{/if}
-	<pre>{newUserDataJson}</pre>
 </div>
 
 <style>

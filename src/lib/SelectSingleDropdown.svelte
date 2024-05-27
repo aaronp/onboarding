@@ -1,8 +1,9 @@
 <script>
-  import { generateUUID } from './utils.js';
+  import { generateUUID, asLableValue } from './utils.js';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
+
 
   function onChange(event) {
     value = event.target.value;
@@ -22,7 +23,7 @@
   {/if}
   <select id={inputId} bind:value on:change={onChange} >
     {#each options as option}
-      <option value={option.value}>{option.label}</option>
+      <option value={asLableValue(option).value}>{asLableValue(option).label}</option>
     {/each}
   </select>
 </div>
