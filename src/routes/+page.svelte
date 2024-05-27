@@ -1,17 +1,16 @@
 <script>
 	import CreateUser from "$lib/CreateUser.svelte";
 	import SelectSingleDropdown from '$lib/SelectSingleDropdown.svelte';
-	
+	import { goto } from '$app/navigation';
+
+	// we have a little boolean toggle to show either the log in or create
+	// user content
 	let createNewUserClicked= false;
+
 	let selectedUser = {};
-	let doLogIn = false;
-	let result = {};
+	let currentUser = {};
+
 	export let data;
-
-	let newUserData = {};
-
-	$: newUserDataJson = JSON.stringify(newUserData);
-	$: debug = createNewUserClicked;
 
 	function onCancelNewUser() {
 		createNewUserClicked = false;
@@ -22,24 +21,38 @@
 
 	function onAddUser(event) {
 		createNewUserClicked = false;
-		newUserData = event.detail;
-		result = data.service.createNewUser(JSON.stringify(newUserData));
+		const newUserData = event.detail;
+		const result = data.service.createNewUser(JSON.stringify(newUserData));
+
+
+		// TODO - let's do this explicitly ... just doing it here for now as hot reload is annoying
+		data.service.snapshotDatabase();
+
+		// and now log the new user in
+		logUserIn(newUserData.name);
 	}
 
-	function logUserIn(newValue) {
-		doLogIn = true;
+	function onUserSelected(event) {
+		const userName = event.detail;
+		logUserIn(userName);
+	}
+
+	function logUserIn(userName) {
+		console.log("username is "+ userName);
+		var user = data.service.getUser(userName);
+
+		if (user && user.name) {
+			data.currentUser.set(user);
+			currentUser = user;
+			goto('/dashboard');
+		}
 	}
 </script>
-<p>doLogIn = {doLogIn} with {selectedUser}</p>
-newUserDataJson is <pre>{newUserDataJson}</pre>
-<p>service is {data.service}</p>
-<p>save result  is {result}</p>
 <div class="centered-div">
-
 	{#if createNewUserClicked}
 		<CreateUser on:cancel={onCancelNewUser} on:submit={onAddUser}/>
 	{:else}
-		<SelectSingleDropdown label="Log In As:" bind:options={data.users} bind:value={selectedUser} on:update={logUserIn}/>
+		<SelectSingleDropdown label="Log In As:" bind:options={data.users} bind:value={selectedUser} on:update={onUserSelected}/>
 
 		<br/>
 		<hr class="styled-hr"/>

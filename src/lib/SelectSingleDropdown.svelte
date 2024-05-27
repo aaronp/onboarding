@@ -6,7 +6,6 @@
 
 
   function onChange(event) {
-    value = event.target.value;
     dispatch('update', value);
   }  
   let inputId = generateUUID();

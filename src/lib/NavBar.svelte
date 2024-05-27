@@ -1,22 +1,21 @@
 <script>
 	import { base } from '$app/paths'
-    import UserDropdown from './UserDropdown.svelte';
+    import { appBackend, currentUser } from '$lib/stores/backend.js';
     let user = null;
-    // let user = { name: "John Doe", loggedIn: true };
+    currentUser.subscribe(value => {
+        console.log("Current User is " + value);
+        user = value;
+    });
 </script>
 
+{#if user }
 <nav class="navbar">
     <div class="nav-links">
-        <a href="{base}/">Home</a>
-        {#if user }
         <a href="{base}/start">Create Fund</a>
         <a href="{base}/dashboard">Dashboard</a>
-        {/if}
     </div>
-    {#if user }
-        <UserDropdown {user} />
-    {/if}
 </nav>
+{/if}
 
 
 <style>

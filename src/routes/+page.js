@@ -1,4 +1,4 @@
-import { appBackend } from '$lib/stores/backend.js';
+import { appBackend, currentUser } from '$lib/stores/backend.js';
 
 let service;
 
@@ -10,10 +10,9 @@ appBackend.subscribe(value => {
 export async function load({ fetch }) {
     const allUsers = service.listUsers();
 
-    console.log("allUsers", allUsers);
-
     return {
         service : service,
+        currentUser: currentUser,
         users: allUsers
     };
 }
