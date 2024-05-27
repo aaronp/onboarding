@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cat << 'EOF' > ./src/service.js
+cat << 'EOF' > ./src/lib/service.js
 // NOTE: toggle this to localbackend for local development
 // see ./setForGithubPages.sh (or make setForGithubPages) 
 // import { createService } from '$localbackend/main.mjs';

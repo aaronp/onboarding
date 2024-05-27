@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths'
 	import CreateUser from "$lib/CreateUser.svelte";
 	import SelectSingleDropdown from '$lib/SelectSingleDropdown.svelte';
 	import { goto } from '$app/navigation';
@@ -44,7 +45,7 @@
 		if (user && user.name) {
 			data.currentUser.set(user);
 			currentUser = user;
-			goto('/dashboard');
+			goto(`${base}/dashboard`);
 		}
 	}
 </script>

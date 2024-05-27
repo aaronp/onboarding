@@ -14,8 +14,12 @@ latestNode:
 buildServer:
 	cd ../onboarding-backend && sbt "project appJS" fastLinkJS
 
-publish: setForGithubPages copyServer
+# sets up our settings for publishing. Requires 'make build'
+publish: setForGithubPages copyServer build 
 
+clean:
+	rm -rf dist && rm -rf build && rm -rf backend
+	
 setLocalDevelopment:
 	./setLocalDevelopment.sh
 setForGithubPages:

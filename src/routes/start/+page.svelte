@@ -42,7 +42,6 @@
 
     var result = service.submitOnboardingForm(formJson);
     messages = `result was ${result}, which is ${typeof(result)}`;
-    // goto('/submitted');
   }
 </script>
 

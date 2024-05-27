@@ -17,7 +17,7 @@
     function logout(event) {
         event.preventDefault();
         currentUser.set(null);
-        goto('/');
+        goto(`${base}/`);
     }
 </script>
 
