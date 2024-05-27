@@ -9,7 +9,6 @@ appBackend.subscribe(value => {
 
 export async function load({ fetch }) {
 
-
     return {
         users: [
             { 'label': 'Aaron', 'value' : 'Aaron' },

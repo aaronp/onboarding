@@ -69,7 +69,7 @@
     function onSubmit(event) {
         event.preventDefault();
         
-        validate(event);
+        validate();
         if (isValid === true) {
             dispatch('submit', eventData);
         }

@@ -3,9 +3,13 @@
 	import SelectSingleDropdown from '$lib/SelectSingleDropdown.svelte';
 	
 	let createNewUserClicked= false;
-	let selectedUser;
+	let selectedUser = {};
+	let doLogIn = false;
 	export let data;
 
+	let newUserData = {};
+
+	$: newUserDataJson = JSON.stringify(newUserData);
 	$: debug = createNewUserClicked;
 
 	function onCancelNewUser() {
@@ -17,21 +21,22 @@
 		createNewUserClicked = true;
 	}
 
-	function handleSubmit(event) {
-    	event.preventDefault();
+	function onAddUser(event) {
+		createNewUserClicked = false;
+		newUserData = event.detail;
 	}
 
+	function logUserIn(newValue) {
+		doLogIn = true;
+	}
 </script>
-
+<p>doLogIn = {doLogIn} with {selectedUser}</p>
 <div class="centered-div">
 
 	{#if createNewUserClicked}
-		<CreateUser on:cancel={onCancelNewUser} />
+		<CreateUser on:cancel={onCancelNewUser} on:submit={onAddUser}/>
 	{:else}
-		<form on:submit|preventDefault={handleSubmit}>
-			<SelectSingleDropdown label="Log In As:" bind:options={data.users} bind:value={selectedUser} />
-
-		</form>
+		<SelectSingleDropdown label="Log In As:" bind:options={data.users} bind:value={selectedUser} on:update={logUserIn}/>
 
 		<br/>
 		<hr class="styled-hr"/>
@@ -39,6 +44,7 @@
 	    <p>or</p>
 		<button on:click={onCreateNewUser}>Create New User</button>
 	{/if}
+	<pre>{newUserDataJson}</pre>
 </div>
 
 <style>
