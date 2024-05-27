@@ -8,9 +8,10 @@
 <nav class="navbar">
     <div class="nav-links">
         <a href="{base}/">Home</a>
-        <a href="{base}/about">About</a>
+        {#if user }
         <a href="{base}/start">Create Fund</a>
         <a href="{base}/dashboard">Dashboard</a>
+        {/if}
     </div>
     {#if user }
         <UserDropdown {user} />

@@ -20,14 +20,15 @@
 
 <style>
   .form-group {
+    display: flex;
+    align-items: center;
     margin-bottom: 1rem;
   }
   label {
-    display: block;
-    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
   }
   select {
-    width: 100%;
+    flex-grow: 1;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;

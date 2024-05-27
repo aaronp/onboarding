@@ -4,9 +4,7 @@
   import PrivateFund from '$lib/assets/PrivateFund.svelte';
   import Bond from '$lib/assets/Bond.svelte';
   import { base } from '$app/paths'
-  import { onMount } from 'svelte';
   import InputField from '$lib/InputField.svelte';
-  import TextArea from '$lib/TextArea.svelte';
   import SelectDropdown from '$lib/SelectDropdown.svelte';
 
 	export let data;
@@ -25,19 +23,16 @@
   let name = '';
   let about = '';
   let description = '';
-  let useProd = false;
 
   $: formData = {
     selectedAsset,
     about,
     name,
-    description,
-    useProd
+    description
   };
 
  $: formJson = JSON.stringify(formData, null, 2);
 
-  // Function to handle form submission
   function handleSubmit(event) {
     event.preventDefault();
 

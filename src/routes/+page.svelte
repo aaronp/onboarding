@@ -1,16 +1,35 @@
 <script>
-    let count = 0;
+	import NewUser from "$lib/NewUser.svelte";
+	import SelectDropdown from '$lib/SelectDropdown.svelte';
+	
+	let selectedUser;
+	export let data;
+	
 
-	function handleClick() {
-		count += 1;
+	function handleSubmit(event) {
+    	event.preventDefault();
+
 	}
+
 </script>
 
-<h1>home</h1>
+<div class="centered-div">
+	<form on:submit|preventDefault={handleSubmit}>
+		<SelectDropdown label="Log In As:" bind:options={data.users} bind:value={selectedUser} />
 
-<h1>This is my onboarding componet! You clicked  {count} times!</h1>
+	</form>
 
-<button on:click={handleClick}>
-	clicks: {count}
-</button>
+	<br/>
+	<hr />
+	<NewUser />
+	</div>
 
+<style>
+.centered-div {
+    display: flex;
+	flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 100% of the viewport height */
+}
+</style>
