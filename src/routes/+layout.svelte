@@ -3,7 +3,7 @@
 	import Footer from '$lib/Footer.svelte';
 	import Header from '$lib/Header.svelte';
     import { currentUser } from '$lib/stores/backend.js';
-    import "../app.css";
+    import "../app.postcss";
 
     let user = null;
     currentUser.subscribe(value => {

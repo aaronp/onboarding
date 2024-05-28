@@ -6,6 +6,9 @@ We're using:
  * [tailwind css](https://tailwindcss.com/docs/guides/sveltekit)
  * [svelte ux](https://svelte-ux.tecniq.dev)
 
+## Themes
+
+See [themes here](https://svelte-ux.techniq.dev/theme) or [daisyui](https://daisyui.com/docs/themes/)
 
 Other suggests on the radar:
 
