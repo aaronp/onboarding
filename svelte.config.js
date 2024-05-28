@@ -17,6 +17,10 @@ const config = {
 			strict: true
 		})
 	},
+	// compilerOptions: {
+	//   // Disable a11y warnings
+	//   a11y: false
+	// },
 	preprocess: vitePreprocess()
 };
 

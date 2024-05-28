@@ -2,12 +2,13 @@
 	// import NavBar from '$lib/NavBar.svelte';
 	// import Footer from '$lib/Footer.svelte';
 	// import Header from '$lib/Header.svelte';
-    import { ThemeSwitch } from 'svelte-ux';
+    import {  ThemeSwitch } from 'svelte-ux';
 	import { AppBar, AppLayout, Card, Button, NavItem, Tooltip, settings } from 'svelte-ux';
     import { currentUser } from '$lib/stores/backend.js';
-
+    import UserDropdown from '$lib/UserDropdown.svelte';
 	import { page } from '$app/stores';
 	import '../app.postcss';
+	import { isVisibleInScrollParent } from 'svelte-ux/utils/dom';
 
     let user = null;
     currentUser.subscribe(value => {
@@ -31,7 +32,7 @@
 			},
 			ThemeSwitch: {
 				classes: {
-					root: 'p-2'
+					root: 'text-sm text-gray-400 pl-6 py-2 hover:text-white hover:bg-gray-300/10 [&:where(.is-active)]:text-sky-400 [&:where(.is-active)]:bg-gray-500/10'
 				}
 			}
 		}
@@ -39,29 +40,38 @@
 </script>
 
 <AppLayout>
-	<svelte:fragment slot="nav">
-		<NavItem
-			path="/"
-			text="Home"
-			icon="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"
-			currentUrl={$page.url}
-		/>
 
-		<NavItem
-			path="/about"
-			text="About"
-			icon="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
-			currentUrl={$page.url}
-		/>
+	<svelte:fragment slot="nav" >
+		{#if user }
+			<NavItem
+				path="/"
+				text="Home"
+				icon="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"
+				currentUrl={$page.url}
+			/>
+
+			<NavItem
+				path="/about"
+				text="About"
+				icon="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
+				currentUrl={$page.url}
+			/>
+		{/if }
+
+		<div class="last-item">
+			<span class="">Theme:</span>
+			<ThemeSwitch />
+		</div>
 	</svelte:fragment>
 
-	<AppBar title="Svelte UX Starter">
+	<AppBar title="Onboarding">
 
 		<div slot="actions" class="flex gap-3">
 
             {#if user }
-        
-    
+			    
+			<UserDropdown {user} class="user-dropdown" />
+
 			<Tooltip title="Discord" placement="left" offset={2}>
 				<Button
 					icon="M20.33 5.06C18.78 4.33 17.12 3.8 15.38 3.5 15.17 3.89 14.92 4.4 14.74 4.82 12.9 4.54 11.07 4.54 9.26 4.82 9.09 4.4 8.83 3.89 8.62 3.5 6.88 3.8 5.21 4.33 3.66 5.06 0.53 9.79-0.32 14.41 0.1 18.96 2.18 20.52 4.19 21.46 6.17 22.08 6.66 21.4 7.1 20.69 7.48 19.93 6.76 19.66 6.07 19.33 5.43 18.94 5.6 18.81 5.77 18.68 5.93 18.54 9.88 20.39 14.17 20.39 18.07 18.54 18.23 18.68 18.4 18.81 18.57 18.94 17.92 19.33 17.24 19.66 16.52 19.94 16.9 20.69 17.33 21.41 17.82 22.08 19.8 21.46 21.82 20.52 23.9 18.96 24.4 13.69 23.05 9.11 20.33 5.06ZM8.01 16.17C6.83 16.17 5.86 15.06 5.86 13.71 5.86 12.36 6.81 11.25 8.01 11.25 9.22 11.25 10.19 12.36 10.17 13.71 10.17 15.06 9.22 16.17 8.01 16.17ZM15.99 16.17C14.8 16.17 13.83 15.06 13.83 13.71 13.83 12.36 14.78 11.25 15.99 11.25 17.19 11.25 18.17 12.36 18.14 13.71 18.14 15.06 17.19 16.17 15.99 16.17Z"
@@ -89,9 +99,26 @@
 					target="_blank"
 				/>
 			</Tooltip>
-			<ThemeSwitch />
 		</div>
 	</AppBar>
 
 	<slot />
 </AppLayout>
+
+<style>
+.user-dropdown {
+	margin: 4em;
+}
+UserDropdown {
+    margin-left: auto; /* pushes the dropdown to the right */
+ }
+
+
+.last-item {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom:4em;
+  margin-left:1em;
+}
+</style>

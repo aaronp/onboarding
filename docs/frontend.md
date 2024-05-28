@@ -1,10 +1,11 @@
 # Notes on front-end dev
 
-There's loads to consider.
 
 We're using:
  * [tailwind css](https://tailwindcss.com/docs/guides/sveltekit)
  * [svelte ux](https://svelte-ux.tecniq.dev)
+
+See [here](https://svelte-ux.techniq.dev/customization) for customisation
 
 ## Themes
 
