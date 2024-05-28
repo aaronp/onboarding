@@ -2,7 +2,7 @@
 	import { base } from '$app/paths'
 	import { currentUser } from './stores/backend';
     import { goto } from '$app/navigation';
-    import { Tooltip, Avatar, Icon } from 'svelte-ux';
+    import { Toggle, Button, Tooltip, Avatar, Icon, ResponsiveMenu, Settings, MenuItem } from 'svelte-ux';
     import { writable } from "svelte/store";
 
     let avatarData = writable("");
@@ -33,23 +33,35 @@
 <svelte:document on:click={closeDropdown} />
 
 {#if user}
+    <Settings
+    components={{
+        Drawer: {
+        classes:
+            "[&.ResponsiveMenu]:rounded-t-xl [&.ResponsiveMenu]:py-2 [&.ResponsiveMenu]:pb-[env(safe-area-inset-bottom)]",
+        },
+    }}
+    >
+
     <Tooltip title={user.name}>
         
+    <Toggle let:on={open} let:toggle let:toggleOff>
+        <Button on:click={toggle}>
             {#if user.avatar}
-            <img src="{user.avatar}" alt={user.name} class="user-avatar" on:click|preventDefault={toggleDropdown} />
-            {:else}
-                <span on:click|stopPropagation|preventDefault={toggleDropdown} >
-                    <Avatar class="border bg-secondary" size="md" >
-                        <Icon svgUrl="https://api.iconify.design/mdi:account.svg" />
-                    </Avatar>   
-                </span>
-            {/if}
-            <div class:open={open} class="dropdown-menu">
-                <a href="{ base }/profile">Profile</a>
-                <a href="{ base }/logout" on:click={logout}>Logout</a>
-            </div>
-
+            <img src="{user.avatar}" alt={user.name} class="user-avatar" />
+        {:else}
+            <Avatar class="border bg-secondary" size="md" >
+                <Icon svgUrl="https://api.iconify.design/mdi:account.svg" />
+            </Avatar>   
+        {/if}
+        <ResponsiveMenu {open} on:close={toggleOff}>
+            <MenuItem on:click={logout}>Log Out</MenuItem>
+        </ResponsiveMenu>
+        </Button>
+    </Toggle>
     </Tooltip>
+    </Settings>
+
+
 {/if}
 
 <style>

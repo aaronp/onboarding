@@ -2,10 +2,17 @@
 
 
 We're using:
- * [tailwind css](https://tailwindcss.com/docs/guides/sveltekit)
+ * [tailwind css](https://tailwindcss.com/docs/guides/sveltekit) (see e.g. [Grid Tailwind](https://svelte-ux.techniq.dev/docs/components/GridTailwind
+))
  * [svelte ux](https://svelte-ux.tecniq.dev)
 
+
 See [here](https://svelte-ux.techniq.dev/customization) for customisation
+
+## Icons
+
+See [here](https://pictogrammers.github.io/@mdi/font/2.0.46/)
+
 
 ## Themes
 

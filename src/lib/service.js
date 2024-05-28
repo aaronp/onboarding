@@ -1,6 +1,7 @@
 // NOTE: toggle this to localbackend for local development
-// see ./setForGithubPages.sh (or make setForGithubPages) 
-// import { createService } from '$localbackend/main.mjs';
-import { createService } from '$backend/main.mjs';
+// see setLocalDevelopment.sh (or make setLocalDevelopment)
+//
+// import { createService } from '$backend/main.mjs';
+import { createService } from '$localbackend/main.mjs';
 
 export { createService };

@@ -1,0 +1,127 @@
+<script lang="ts">
+
+    import { mdiMagnify, mdiPlus, mdiPencil, mdiAccount } from '@mdi/js';
+    import { Form, TextField, SelectField, Button } from 'svelte-ux';
+    
+  
+    let selectedProduct;
+    let selectedSubProduct;
+   export let data = {};
+
+   let options = [
+    { label: 'One', value: 1, icon: mdiMagnify },
+    { label: 'Two', value: 2, icon: mdiPlus },
+    { label: 'Three', value: 3, icon: mdiPencil },
+    { label: 'Four', value: 4, icon: mdiAccount },
+  ];
+</script>
+
+<h3>I want to list a new product</h3>
+
+<p>Products: {JSON.stringify(data)}</p>
+
+
+<!--
+    product-type: drop-down: (e.g. tool, toy, service, etc)
+    sub-type: drop-down (e.g. hammer, screwdriver, etc)
+
+    then, based on the above, some additional fields, but also:
+
+
+    -------------------------
+    Name: (this is full width)
+    -------------------------
+
+    Make: (drop-down based on product-type)
+
+    Location: country select
+
+    Tags: input field with chips
+
+    Offer date: date picker
+
+    List until date: smae
+
+    Suggested Price: input field with a currency symbol in the field
+
+    Actions are:
+
+    Submit and cancel
+-->
+
+<Form
+  initial={data}
+  on:change={(e) => (data = e.detail)}
+  let:draft
+  let:state
+  let:commit
+  let:revert
+  let:revertAll
+  let:undo
+  let:current
+  let:refresh
+>
+
+<div class="grid grid-cols-2">
+    <div class="grid grid-cols-2  gap-4">
+        <div class="border"><SelectField {options} bind:selectedProduct clearable={false} /></div>
+        <div class="border"><SelectField {options} bind:selectedSubProduct clearable={false} /></div>
+    </div>
+
+    <div class="grid grid-cols-1 border">
+
+        <TextField
+        label="Name"
+        value={draft.last}
+        on:change={(e) => {
+        draft.last = e.detail.value;
+        // Call "refresh" as often as you want "current" updated (on:blur, etc)
+        refresh();
+        }}
+    />
+
+    </div>
+</div>
+ 
+
+<div class="grid grid-cols-2">
+    <div class="grid grid-cols-2  gap-4">
+        <div class="border">
+            <TextField
+            label="Product Type"
+            value={draft.first}
+            on:change={(e) => {
+              draft.name = e.detail.value;
+              // Call "refresh" as often as you want "current" updated (on:blur, etc)
+              refresh();
+            }}
+          />
+        </div>
+        <div class="border">
+            <TextField
+            label="Name"
+            value={draft.last}
+            on:change={(e) => {
+              draft.last = e.detail.value;
+              // Call "refresh" as often as you want "current" updated (on:blur, etc)
+              refresh();
+            }}
+          />
+        
+        </div>
+    </div>
+</div>
+
+
+  <Button on:click={() => commit()} disabled={current.name == null}
+    >Apply</Button
+  >
+  <Button on:click={() => revert()}>Cancel</Button>
+  <Button on:click={() => undo()}>Undo</Button>
+  <Button on:click={() => revertAll()}>Reset</Button>
+  <div class="mt-2">
+    <div>current: {JSON.stringify(current)}</div>
+    <div>state: {JSON.stringify(state)}</div>
+  </div>
+</Form>
+

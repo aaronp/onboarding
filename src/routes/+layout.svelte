@@ -1,20 +1,31 @@
 <script lang="ts">
-	// import NavBar from '$lib/NavBar.svelte';
-	// import Footer from '$lib/Footer.svelte';
-	// import Header from '$lib/Header.svelte';
-    import {  ThemeSwitch } from 'svelte-ux';
-	import { AppBar, AppLayout, Card, Button, NavItem, Tooltip, settings } from 'svelte-ux';
+	import { ThemeSwitch, AppBar, AppLayout, Card, Button, NavItem, Tooltip, settings } from 'svelte-ux';
     import { currentUser } from '$lib/stores/backend.js';
     import UserDropdown from '$lib/UserDropdown.svelte';
 	import { page } from '$app/stores';
 	import '../app.postcss';
-	import { isVisibleInScrollParent } from 'svelte-ux/utils/dom';
+    import { onMount } from 'svelte';
+	import { base } from '$app/paths'
 
     let user = null;
     currentUser.subscribe(value => {
         user = value;
     });
 
+	onMount(() => {
+		
+		if (!user) {
+			const target = base + '/';
+			if (window.location.pathname != target) {
+				console.log("setting location to " + target + ' from ' + window.location.pathname);
+
+				// TODO - instead of commenting this out, default the user to summat
+				window.location.href = base + '/';
+			} else {
+				console.log("location is already " + window.location.href);
+			}
+		}
+	});
 	settings({
 		components: {
 			AppBar: {
@@ -51,9 +62,23 @@
 			/>
 
 			<NavItem
-				path="/about"
-				text="About"
+				path="/onboard"
+				text="On-board"
 				icon="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
+				currentUrl={$page.url}
+			/>
+
+			<NavItem
+				path="/categories"
+				text="Categories"
+				icon="M7 4V2C7 1.44772 7.44772 1 8 1H16C16.5523 1 17 1.44772 17 2V4H20C20.5523 4 21 4.44772 21 5V7C21 7.55228 20.5523 8 20 8H19.703L18.497 17.883C18.4095 18.5267 17.8817 19 17.232 19H6.768C6.11831 19 5.59048 18.5267 5.503 17.883L4.297 8H4C3.44772 8 3 7.55228 3 7V5C3 4.44772 3.44772 4 4 4H7ZM9 4H15V3H9V4ZM5.03 8L6.17 17H17.83L18.97 8H5.03ZM9 21C8.44772 21 8 21.4477 8 22C8 22.5523 8.44772 23 9 23C9.55228 23 10 22.5523 10 22C10 21.4477 9.55228 21 9 21ZM15 21C14.4477 21 14 21.4477 14 22C14 22.5523 14.4477 23 15 23C15.5523 23 16 22.5523 16 22C16 21.4477 15.5523 21 15 21Z"
+				currentUrl={$page.url}
+			/>
+
+			<NavItem
+				path="/docstore"
+				text="Database"
+				icon="M12 2C6.48 2 2 3.79 2 6v12c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0-2.21-4.48-4-10-4zm0 2c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2z"
 				currentUrl={$page.url}
 			/>
 		{/if }
@@ -84,7 +109,7 @@
 			<Tooltip title="Open Twitter / X" placement="left" offset={2}>
 				<Button
 					icon="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"
-					href="https://twitter.com/techniq35"
+					href="https://x.com/aaronpritzlaff"
 					class="p-2"
 					target="_blank"
 				/>
@@ -102,7 +127,9 @@
 		</div>
 	</AppBar>
 
-	<slot />
+	<main>
+		<slot />
+	</main>
 </AppLayout>
 
 <style>
@@ -113,6 +140,9 @@ UserDropdown {
     margin-left: auto; /* pushes the dropdown to the right */
  }
 
+ main {
+	padding: 1em;
+ }
 
 .last-item {
   position: absolute;

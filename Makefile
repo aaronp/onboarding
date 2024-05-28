@@ -29,3 +29,7 @@ setForGithubPages:
 # import { createService } from '$backend/main.mjs';
 copyServer: buildServer
 	mkdir backend && cp ../onboarding-backend/js/target/scala-3.4.1/app-fastopt/* backend/
+# Just takes a quick snapshot of our compiled backend js
+# useful for local development
+snapshot:
+	cp ../onboarding-backend/js/target/scala-3.4.1/app-fastopt/* backend/

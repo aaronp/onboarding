@@ -4,7 +4,8 @@
 I've tried to track different decisions as I went along here:
 
  * [Approach to services](./services.md)
- * [Bootstrapping the project](./docs/bootstrap.md)
+ * [Bootstrapping the project](./bootstrap.md)
+ * [Front-End Notes](./frontend.md)
 
 
 ## Local Development

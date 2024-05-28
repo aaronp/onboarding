@@ -26,10 +26,6 @@
 		const newUserData = event.detail;
 		const result = data.service.createNewUser(JSON.stringify(newUserData));
 
-
-		// TODO - let's do this explicitly ... just doing it here for now as hot reload is annoying
-		data.service.snapshotDatabase();
-
 		// and now log the new user in
 		logUserIn(newUserData.name);
 	}
@@ -40,13 +36,20 @@
 	}
 
 	function logUserIn(userName) {
-		console.log("username is "+ userName);
-		var user = data.service.getUser(userName);
+		var result = data.service.getUser(userName);
 
-		if (user && user.name) {
-			data.currentUser.set(user);
-			currentUser = user;
-			goto(`${base}/dashboard`);
+
+		console.log('getUser ', userName ,' is ', typeof result, ' which is ', result);
+
+		if (result && result.name) {
+			console.log('log in ', userName, ' got ', result);
+			data.currentUser.set(result);
+			currentUser = result;
+			// goto(`${base}/categories`);
+			goto(`${base}/categories`);
+		} else {
+			console.log('failed to log in ', userName);
+		
 		}
 	}
 </script>
