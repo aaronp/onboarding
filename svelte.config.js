@@ -1,9 +1,5 @@
 import adapter from '@sveltejs/adapter-static';
-
-// see https://kit.svelte.dev/docs/adapter-static 
-// for gh-pages hosting
-// base should be https://aaronp.github.io/static-svelte
-
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 const dev = process.env.NODE_ENV === 'development';
 
@@ -20,7 +16,8 @@ const config = {
 			precompress: false,
 			strict: true
 		})
-	}
+	},
+	preprocess: vitePreprocess()
 };
 
 export default config;

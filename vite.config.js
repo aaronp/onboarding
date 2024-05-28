@@ -10,5 +10,11 @@ export default defineConfig({
 			$localbackend: path.resolve(__dirname, '../onboarding-backend/js/target/scala-3.4.1/app-fastopt'),
 			$backend: path.resolve(__dirname, 'backend'),
 		},
-	}
+	},
+	server: {
+		fs: {
+		  // Allow serving files from one level up to the project root
+		  allow: ['..', 'backend'],
+		},
+	  }
   });
