@@ -17,6 +17,11 @@ const config = {
 			strict: true
 		})
 	},
+    prerender: {
+      crawl: true, // Enable crawling of your app to find all routes
+      enabled: true,
+      pages: ['*'] // Specify the routes to prerender, '*' for all routes
+    },
 	// compilerOptions: {
 	//   // Disable a11y warnings
 	//   a11y: false
