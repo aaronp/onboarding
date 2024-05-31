@@ -8,7 +8,6 @@ const config = {
     kit: {
 		paths: {
             base: dev ? '' : '/onboarding',
-            // base: '/onboarding',
 		},
 		adapter: adapter({
 			fallback: '404.html',
