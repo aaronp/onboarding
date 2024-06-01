@@ -26,6 +26,8 @@
 		const newUserData = event.detail;
 		const result = data.service.createNewUser(JSON.stringify(newUserData));
 
+		console.log('createNewUser ', result);
+
 		// and now log the new user in
 		logUserIn(newUserData.name);
 	}
@@ -57,13 +59,14 @@
 	{#if createNewUserClicked}
 		<CreateUser on:cancel={onCancelNewUser} on:submit={onAddUser}/>
 	{:else}
+	{#if data.users && data.users.length > 0}
 		<SelectSingleDropdown label="Log In As:" bind:options={data.users} bind:value={selectedUser} on:update={onUserSelected}/>
-
 		<br/>
 		<hr class="styled-hr"/>
 
 	    <p>or</p>
 
+	{/if}
 		<Button variant="fill-outline" size="lg" color="secondary" on:click={onCreateNewUser}>Create New User</Button>
 	{/if}
 </div>

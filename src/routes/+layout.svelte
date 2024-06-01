@@ -3,6 +3,7 @@
     import { currentUser } from '$lib/stores/backend.js';
     import UserDropdown from '$lib/UserDropdown.svelte';
 	import { page } from '$app/stores';
+    import { mdiCog } from '@mdi/js';
 	import '../app.postcss';
     import { onMount } from 'svelte';
 	import { base } from '$app/paths'
@@ -55,39 +56,42 @@
 	<svelte:fragment slot="nav" >
 		{#if user }
 			<NavItem
-				path="{base}/"
+				path="{base}/home"
 				text="Home"
 				icon="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"
 				currentUrl={$page.url}
 			/>
 
-			<NavItem
-				path="{base}/onboard"
-				text="On-board"
-				icon="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
-				currentUrl={$page.url}
-			/>
+			{#if user.isAuthenticatedUser }
+				<NavItem
+					path="{base}/onboard"
+					text="On-board"
+					icon="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
+					currentUrl={$page.url}
+				/>
+			{/if}
 
-			<NavItem
-				path="{base}/categories"
-				text="Categories"
-				icon="M7 4V2C7 1.44772 7.44772 1 8 1H16C16.5523 1 17 1.44772 17 2V4H20C20.5523 4 21 4.44772 21 5V7C21 7.55228 20.5523 8 20 8H19.703L18.497 17.883C18.4095 18.5267 17.8817 19 17.232 19H6.768C6.11831 19 5.59048 18.5267 5.503 17.883L4.297 8H4C3.44772 8 3 7.55228 3 7V5C3 4.44772 3.44772 4 4 4H7ZM9 4H15V3H9V4ZM5.03 8L6.17 17H17.83L18.97 8H5.03ZM9 21C8.44772 21 8 21.4477 8 22C8 22.5523 8.44772 23 9 23C9.55228 23 10 22.5523 10 22C10 21.4477 9.55228 21 9 21ZM15 21C14.4477 21 14 21.4477 14 22C14 22.5523 14.4477 23 15 23C15.5523 23 16 22.5523 16 22C16 21.4477 15.5523 21 15 21Z"
-				currentUrl={$page.url}
-			/>
+			{#if user.isOperations}
+				<NavItem
+					path="{base}/categories"
+					text="Categories"
+					icon="M7 4V2C7 1.44772 7.44772 1 8 1H16C16.5523 1 17 1.44772 17 2V4H20C20.5523 4 21 4.44772 21 5V7C21 7.55228 20.5523 8 20 8H19.703L18.497 17.883C18.4095 18.5267 17.8817 19 17.232 19H6.768C6.11831 19 5.59048 18.5267 5.503 17.883L4.297 8H4C3.44772 8 3 7.55228 3 7V5C3 4.44772 3.44772 4 4 4H7ZM9 4H15V3H9V4ZM5.03 8L6.17 17H17.83L18.97 8H5.03ZM9 21C8.44772 21 8 21.4477 8 22C8 22.5523 8.44772 23 9 23C9.55228 23 10 22.5523 10 22C10 21.4477 9.55228 21 9 21ZM15 21C14.4477 21 14 21.4477 14 22C14 22.5523 14.4477 23 15 23C15.5523 23 16 22.5523 16 22C16 21.4477 15.5523 21 15 21Z"
+					currentUrl={$page.url} />
+			{/if}
 
-			<NavItem
-				path="{base}/ops/docstore"
-				text="Database"
-				icon="M12 2C6.48 2 2 3.79 2 6v12c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0-2.21-4.48-4-10-4zm0 2c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2z"
-				currentUrl={$page.url}
-			/>
+			{#if user.isEngineering}
+				<NavItem
+					path="{base}/ops/docstore"
+					text="Database"
+					icon="M12 2C6.48 2 2 3.79 2 6v12c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0-2.21-4.48-4-10-4zm0 2c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2z"
+					currentUrl={$page.url} />
 
-			<NavItem
-			path="{base}/ops/flow"
-			text="BackEnd"
-			icon="M12 2C6.48 2 2 3.79 2 6v12c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0-2.21-4.48-4-10-4zm0 2c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2zm0 4c4.97 0 8 1.57 8 2s-3.03 2-8 2-8-1.57-8-2 3.03-2 8-2z"
-			currentUrl={$page.url}
-		/>
+				<NavItem
+				path="{base}/ops/flow"
+				text="BackEnd"
+				icon={mdiCog}
+				currentUrl={$page.url} />
+			{/if}
 		{/if }
 
 		<div class="last-item">
