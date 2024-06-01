@@ -47,8 +47,7 @@
 			console.log('log in ', userName, ' got ', result);
 			data.currentUser.set(result);
 			currentUser = result;
-			// goto(`${base}/categories`);
-			goto(`${base}/categories`);
+			goto(`${base}/home`);
 		} else {
 			console.log('failed to log in ', userName);
 		

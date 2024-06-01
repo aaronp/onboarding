@@ -8,8 +8,8 @@ appBackend.subscribe(value => {
 });
 
 export async function load({ fetch }) {
-    const products = service.listCategories();
+    const categories = service.listCategories();
     return {
-        products
+      categories
     };
 }
