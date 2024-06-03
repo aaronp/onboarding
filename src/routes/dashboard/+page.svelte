@@ -1,16 +1,50 @@
-<script>
-	import { base } from '$app/paths'
-</script>
+<script lang="ts">
+    import { mdiPencil, mdiCancel } from '@mdi/js';
+    import { currentUser } from '$lib/stores/backend.js';
+    import { Shine, Drawer, ListItem, Button, Card  } from 'svelte-ux';
+    import { appBackend } from '$lib/stores/backend.js';
+    import { goto } from '$app/navigation';
+    import { base } from '$app/paths'
+  
+  
+    let service;
+    let page;
+    let user = null;
+    let drafts = [];
+    currentUser.subscribe(value => {
+        user = value;
+    });
+  
+    // Subscribe to the store
+    appBackend.subscribe(value => {
+      service = value;
+      page = service.newDashboardPage();
+      drafts = page.draftsForUser(user.name);
+    });
+  
+  </script>
 
-<h2>Recent Activity</h2>
 
-(here we list actions)
+<div class="grid gap-8">
 
-<card>
-    You can upload docs for your <a href="{base}/summary">latest submission</a>
-</card>
+  <Shine>
+    <Card title="Dashboard" />
+  </Shine>
+  
+    {#each drafts as draft}
 
+      <div class="grid  gap-3">
 
-<card>
-    Your last submission has been approved
-</card>
+        <Card title={draft.data.name} subheading="{draft.data.category} / {draft.data.subCategory} : {draft._id}">
+
+          <div slot="contents" class="bg-danger/10 h-40">
+            Contents
+          </div>
+          <div slot="actions">
+            <Button icon={mdiPencil} variant="fill-outline" size="lg" color="primary">Edit</Button>
+            <Button iconf={mdiCancel} variant="fill-outline" size="lg" color="secondary">Withdraw</Button>
+          </div>
+        </Card>
+      </div>
+    {/each}
+  </div>
