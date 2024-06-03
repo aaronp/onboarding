@@ -38,7 +38,7 @@
 
     console.log("response: ", response);
     if (response.result.success) {
-      goto("{base}/dashboard");
+      goto(`${base}/dashboard`);
     }
 
   }

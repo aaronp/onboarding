@@ -1,6 +1,6 @@
 <script>
 import { appBackend } from '$lib/stores/backend.js';
-import { Button, ButtonGroup, Card } from 'svelte-ux';
+import { Button, ButtonGroup, Card, ExpansionPanel } from 'svelte-ux';
 let service;
 let page;
 // Subscribe to the store
@@ -27,8 +27,13 @@ function persist() {
     </div>
     <div class="border"><pre>{page.formatted()}</pre></div>
     <div ><hr /></div>
-    <div ><Card title="Json"/></div>
-    <div class="border"><pre>{JSON.stringify(page.jason(), null, 2)}</pre></div>
+    
+    <div class="border">
+        <ExpansionPanel>
+            <div slot="trigger"><Card title="Json"/></div>
+            <pre>{JSON.stringify(page.jason(), null, 2)}</pre>
+        </ExpansionPanel>
+    </div>
   </div>
 
 
