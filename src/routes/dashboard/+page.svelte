@@ -64,7 +64,7 @@
 
             <Button icon={mdiPencil} variant="fill-outline" size="lg" color="primary">Edit</Button>
             {#if !draft.data.withdrawn}
-            <Button iconf={mdiCancel} variant="fill-outline" size="lg" color="secondary" on:click={onWithdraw(draft._id)}>Withdraw</Button>
+            <Button iconf={mdiCancel} variant="fill-outline" size="lg" color="secondary" on:click={(e) => onWithdraw(draft._id)}>Withdraw</Button>
             {/if}
           
         </div>
