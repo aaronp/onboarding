@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { mdiPencil, mdiCancel } from '@mdi/js';
+    import { mdiPencil, mdiCancel, mdiAlert } from '@mdi/js';
     import { currentUser } from '$lib/stores/backend.js';
-    import { Shine, Drawer, ListItem, Button, Card  } from 'svelte-ux';
+    import { Shine, ExpansionPanel, Notification, Icon, Button, Card  } from 'svelte-ux';
     import { appBackend } from '$lib/stores/backend.js';
     import { goto } from '$app/navigation';
     import { base } from '$app/paths'
@@ -22,6 +22,11 @@
       drafts = page.draftsForUser(user.name);
     });
   
+    function onWithdraw(draftId) {
+      const result = page.withdrawDraft(draftId);
+      console.log("result: ", result);
+      drafts = page.draftsForUser(user.name);
+    }
   </script>
 
 
@@ -37,13 +42,33 @@
 
         <Card title={draft.data.name} subheading="{draft.data.category} / {draft.data.subCategory} : {draft._id}">
 
-          <div slot="contents" class="bg-danger/10 h-40">
-            Contents
+          <div slot="contents" >
+
+            <ExpansionPanel>
+              <div slot="trigger" class="flex-1 p-3">Detail...</div>
+              <div>
+                <pre>{JSON.stringify(draft, null, 2)}</pre>
+              </div>
+            </ExpansionPanel>
+            {#if draft.data.withdrawn}
+            <Notification open >
+              <div slot="icon" >
+                <Icon data={mdiAlert} class="text-warning-200" />
+              </div>
+              <div slot="title" >Withdrawn</div>
+              <div slot="description" >This product has been withdrawn</div>
+            </Notification>
+            {/if}
           </div>
           <div slot="actions">
+
             <Button icon={mdiPencil} variant="fill-outline" size="lg" color="primary">Edit</Button>
-            <Button iconf={mdiCancel} variant="fill-outline" size="lg" color="secondary">Withdraw</Button>
-          </div>
+            {#if !draft.data.withdrawn}
+            <Button iconf={mdiCancel} variant="fill-outline" size="lg" color="secondary" on:click={onWithdraw(draft._id)}>Withdraw</Button>
+            {/if}
+          
+        </div>
+
         </Card>
       </div>
     {/each}

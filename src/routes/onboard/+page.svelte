@@ -32,7 +32,6 @@
     delete draft.subCategories;
     draft.category = selectedCategory;
     draft.subCategory = selectedSubCategory;
-    draft.user = user;
     draft.ownerUserId = user.name;
     const response = page.onSaveDraft(draft);
 
