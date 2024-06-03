@@ -20,6 +20,21 @@ const config = {
     prerender: {
       crawl: true, // Enable crawling of your app to find all routes
       enabled: true,
+	  handleHttpError: ({ status, path, referrer, referenceType }) => {
+        if (status === 404) {
+          // Ignore 404 errors
+          return;
+        }
+
+        // Log other errors for analysis
+        console.error(
+          `Received HTTP ${status} error while prerendering ${path} (referred from ${referrer})`
+        );
+
+        // You can choose to throw an error to stop the build
+        // or simply return to continue the prerendering process
+        throw new Error(`Failed to prerender ${path} due to HTTP ${status} error w/ reference type ${referenceType}`);
+      },
       pages: ['*'] // Specify the routes to prerender, '*' for all routes
     },
 	// compilerOptions: {

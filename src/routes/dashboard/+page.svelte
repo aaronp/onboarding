@@ -1,10 +1,7 @@
 <script lang="ts">
     import { mdiPencil, mdiCancel, mdiAlert } from '@mdi/js';
-    import { currentUser } from '$lib/stores/backend.js';
+    import { currentUser, appBackend} from '$lib/stores/backend.js';
     import { Shine, ExpansionPanel, Notification, Icon, Button, Card  } from 'svelte-ux';
-    import { appBackend } from '$lib/stores/backend.js';
-    import { goto } from '$app/navigation';
-    import { base } from '$app/paths'
   
   
     let service;
@@ -15,17 +12,22 @@
         user = value;
     });
   
+    function refreshList() {
+      if (user && page) {
+        drafts = page.draftsForUser(user.name);
+      }
+    }
     // Subscribe to the store
     appBackend.subscribe(value => {
       service = value;
       page = service.newDashboardPage();
-      drafts = page.draftsForUser(user.name);
+      refreshList();
     });
   
     function onWithdraw(draftId) {
       const result = page.withdrawDraft(draftId);
       console.log("result: ", result);
-      drafts = page.draftsForUser(user.name);
+      refreshList();
     }
   </script>
 
