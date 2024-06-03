@@ -3,7 +3,7 @@
 	import CreateUser from "$lib/CreateUser.svelte";
 	import SelectSingleDropdown from '$lib/SelectSingleDropdown.svelte';
 	import { goto } from '$app/navigation';
-	import { AppBar, AppLayout, Card, Button, NavItem, Tooltip, settings } from 'svelte-ux';
+	import { Button } from 'svelte-ux';
 
 	// we have a little boolean toggle to show either the log in or create
 	// user content
@@ -40,11 +40,7 @@
 	function logUserIn(userName) {
 		var result = data.service.getUser(userName);
 
-
-		console.log('getUser ', userName ,' is ', typeof result, ' which is ', result);
-
 		if (result && result.name) {
-			console.log('log in ', userName, ' got ', result);
 			data.currentUser.set(result);
 			currentUser = result;
 			goto(`${base}/home`);

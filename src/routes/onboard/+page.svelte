@@ -1,47 +1,55 @@
 <script lang="ts">
 
-    import { mdiMagnify, mdiPlus, mdiPencil, mdiAccount } from '@mdi/js';
-    import { Form, TextField, SelectField, Button, Card } from 'svelte-ux';
-    
-    import { appBackend } from '$lib/stores/backend.js';
+  import { currentUser } from '$lib/stores/backend.js';
+  import { Form, TextField, SelectField, Button, Card, Field, DateField } from 'svelte-ux';
+  import { appBackend } from '$lib/stores/backend.js';
+  import { goto } from '$app/navigation';
+  import { base } from '$app/paths'
 
-    let service;
-    let page;
-    let selectedCategory;
-    let selectedSubCategory;
-    let categories;
 
-    // Subscribe to the store
-    appBackend.subscribe(value => {
-      service = value;
-      page = service.newOnboardingPage();
-      categories = page.categoryOptions();
-      
-    });
+  let service;
+  let page;
+  let selectedCategory;
+  let selectedSubCategory;
+  let categories;
+  let listDate;
+  let user = null;
+  currentUser.subscribe(value => {
+      user = value;
+  });
 
-    // function onSelectedCategoryChanged(event) {
-    //   console.log("onSelectedCategoryChanged", selectedCategory, ' detail is ', event.detail);
-    //   subCategories = page.subCategoryOptions(selectedCategory);
-    // }
+  // Subscribe to the store
+  appBackend.subscribe(value => {
+    service = value;
+    page = service.newOnboardingPage();
+    categories = page.categoryOptions();
+  });
 
-    $: subCategories = page.subCategoryOptions(selectedCategory);
+  function saveDraft(draft) {
 
-    export let data = {};
+    // clean up our draft document from our state:
+    delete draft.categories;
+    delete draft.subCategories;
+    draft.category = selectedCategory;
+    draft.subCategory = selectedSubCategory;
+    draft.user = user;
+    draft.ownerUserId = user.name;
+    const response = page.onSaveDraft(draft);
 
-    // let options = [
-    //   { label: 'One', value: 1, icon: mdiMagnify },
-    //   { label: 'Two', value: 2, icon: mdiPlus },
-    //   { label: 'Three', value: 3, icon: mdiPencil },
-    //   { label: 'Four', value: 4, icon: mdiAccount },
-    // ];
+    console.log("response: ", response);
+    if (response.result.success) {
+      goto("{base}/dashboard");
+    }
+
+  }
+
+  $: subCategories = page.subCategoryOptions(selectedCategory);
+
+  export let data = {};
+
 </script>
 
 <Card title="Create a new Product" />
-
-<p>Data: {JSON.stringify(data)}</p>
-category Options: {JSON.stringify(categories)}
-<p>subCategories: {subCategories}</p>
-<p>subCategories: {JSON.stringify(subCategories)}</p>
 
 <!--
     product-type: drop-down: (e.g. tool, toy, service, etc)
@@ -87,34 +95,48 @@ category Options: {JSON.stringify(categories)}
 <div class="grid gap-4">
     <div />
     <div class="grid grid-cols-2 gap-4">
+      <Field label="Category" let:id>
         <div class="border"><SelectField options={categories} bind:value={selectedCategory} clearable={false} /></div>
+      </Field>
+      <Field label="Subcategory" let:id>
         <div class="border"><SelectField options={subCategories}  bind:value={selectedSubCategory} clearable={false} /></div>
+      </Field>
     </div>
     <div />
 </div>
  
 
 
-<div class="grid grid-cols-1 border">
+<div class="grid grid-cols-1 gap-4">
 
+  <div>
   <TextField
   label="Name"
-  value={draft.last}
+  value={draft.name}
   on:change={(e) => {
-  draft.last = e.detail.value;
-  // Call "refresh" as often as you want "current" updated (on:blur, etc)
+  draft.name = e.detail.value;
   refresh();
   }}
-/>
+/></div>
 
+
+  <div >
+    <Field label="List Date:" let:id>
+      <DateField value={draft.listDate} on:change={(e) => {
+      draft.listDate = e.detail.value;
+      refresh();
+      }} picker />
+    </Field>
+  </div>
+
+  <div>
+  <Button variant="fill-outline" size="lg" color="primary" on:click={() => {
+      saveDraft(draft);
+     }} disabled={current.name == null}
+    >Save</Button
+  >
 </div>
 
-  <Button on:click={() => commit()} disabled={current.name == null}
-    >Apply</Button
-  >
-  <Button on:click={() => revert()}>Cancel</Button>
-  <Button on:click={() => undo()}>Undo</Button>
-  <Button on:click={() => revertAll()}>Reset</Button>
   <div class="mt-2">
     <div>current: {JSON.stringify(current)}</div>
     <div>state: {JSON.stringify(state)}</div>
