@@ -1,8 +1,10 @@
 <script lang="ts">
-    import { mdiPencil, mdiCancel, mdiAlert } from '@mdi/js';
+    import { mdiPencil, mdiCancel, mdiAlert, mdiInformation } from '@mdi/js';
     import { currentUser, appBackend} from '$lib/stores/backend.js';
     import { Shine, ExpansionPanel, Notification, Icon, Button, Card  } from 'svelte-ux';
-  
+    import { goto } from '$app/navigation';
+    import { base } from '$app/paths'
+
   
     let service;
     let page;
@@ -24,6 +26,9 @@
       refreshList();
     });
   
+    function onEdit(draftId) {
+      goto(`${base}/onboard?id=${draftId}`);
+    }
     function onWithdraw(draftId) {
       const result = page.withdrawDraft(draftId);
       console.log("result: ", result);
@@ -45,6 +50,9 @@
         <Card title={draft.data.name} subheading="{draft.data.category} / {draft.data.subCategory} : {draft._id}">
 
           <div slot="contents" >
+            <div class="grid gap-2">
+              <div class="info">Listed for £{draft.data.price}</div>
+            </div>
 
             <ExpansionPanel>
               <div slot="trigger" class="flex-1 p-3">Detail...</div>
@@ -64,7 +72,7 @@
           </div>
           <div slot="actions">
 
-            <Button icon={mdiPencil} variant="fill-outline" size="lg" color="primary">Edit</Button>
+            <Button icon={mdiPencil} variant="fill-outline" size="lg" color="primary" on:click={(e) => onEdit(draft._id)}>Edit</Button>
             {#if !draft.data.withdrawn}
             <Button iconf={mdiCancel} variant="fill-outline" size="lg" color="secondary" on:click={(e) => onWithdraw(draft._id)}>Withdraw</Button>
             {/if}
@@ -75,3 +83,12 @@
       </div>
     {/each}
   </div>
+
+
+<style>
+.info {
+  font-size: large;
+  text-align: left;
+  align-items: start;
+}
+</style>
