@@ -183,10 +183,12 @@
   >
 </div>
 
+<!--
   <div class="mt-2">
     <div>current: {JSON.stringify(current)}</div>
     <div>state: {JSON.stringify(state)}</div>
   </div>
+-->
 </Form>
 
 <style>

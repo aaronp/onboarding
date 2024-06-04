@@ -11,24 +11,27 @@
     let page;
     let options = [ ];
     let subCategories = [ ];
+    let selectedCategoryName;
     
     appBackend.subscribe(value => {
       service = value;
       page = service.newCategoryPage();
       options = page.options;
+      selectedCategoryName = page.selectedCategoryName;
     });
   
     let currentCategory;
     export let data = {};
 
    function onCategorySelectionChanged(event) {
-     const newValue =event.detail;
+     const newValue = event.detail.value;
+     page.selectedCategoryName = `${newValue}`;
      refresh();
    }
 
    function removeSubCategory(name) {
-    page.onRemoveSubCategory(name);
-    refresh();
+     page.onRemoveSubCategory(name);
+     refresh();
    }
 
    function refresh() {
@@ -41,20 +44,23 @@
       draft.subcategory = '';
       page.onAddSubCategory(name);
       refresh();
+      selectedCategoryName = page.selectedCategoryName;
    }
 
     function onAddCategory(draft) {
       page.onAddCategory(draft.label);
       draft.label = '';
       refresh();
+      selectedCategoryName = page.selectedCategoryName;
     }
 </script>
 
+<p>selectedCategoryName: {selectedCategoryName}</p>
 
 
 <div class="grid gap-8">
   <Card title="Update Categories"  subheading="This page allows you to update the categories/subcategories for onboarding."/>
-  <div class="border">See <a href="{ base }/onboard">onboarding new products</a>.</div>
+  <div>These categories are for <a href="{ base }/onboard">onboarding new products</a>.</div>
   <div/>
 </div>
 
@@ -62,7 +68,7 @@
 
     <div class="grid grid-cols-1 gap-4" >
         <Field label="Category" let:id>
-            <SelectField {id} {options} on:change={onCategorySelectionChanged} bind:value={page.selectedCategoryName}>
+            <SelectField {id} {options} on:change={onCategorySelectionChanged} bind:value={selectedCategoryName}>
             <span slot="append" on:click|stopPropagation>
                 <Button
                 icon={mdiPlus}

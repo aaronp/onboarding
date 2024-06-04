@@ -17,8 +17,8 @@
     function toggleDropdown() {
         open = !open;
     }
+    // TODO - we don't have to do this here -- just use svelte-ux
     function closeDropdown() {
-        console.log("closeDropdown");
         open = false;
     }
 
