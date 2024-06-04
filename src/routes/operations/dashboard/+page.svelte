@@ -12,7 +12,7 @@
     let drafts = [];
     
     function refreshList() {
-        drafts = thisPage.listDrafts();
+        drafts = thisPage.listUnapprovedDrafts();
     }
 
     currentUser.subscribe(value => {

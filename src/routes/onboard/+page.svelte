@@ -21,6 +21,8 @@
   let categories;
   let user = null;
   let savedProduct = null;
+  let gridStyle = "grid-cols-2"
+  let splitGridStyle = "grid-cols-4"
   export let data = {};
 
   currentUser.subscribe(value => {
@@ -122,12 +124,12 @@
 
 <div class="grid gap-4">
     <div/>
-    <div class="grid grid-cols-4 gap-4">
+    <div class="grid {gridStyle} gap-4">
       <Field label="Category" let:id>
         <div class="border field-div" style="border:solid red 2"><SelectField options={categories} bind:value={selectedCategory} clearable={false} /></div>
       </Field>
     </div>
-    <div class="grid grid-cols-4 gap-4">
+    <div class="grid {gridStyle} gap-4">
       <Field label="Subcategory" let:id>
         <div class="border field-div"><SelectField options={subCategories}  bind:value={selectedSubCategory} clearable={false} /></div>
       </Field>
@@ -136,7 +138,7 @@
  
 <div class="grid grid-cols-1 gap-4">
   <div />
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid {gridStyle} gap-4">
   <TextField
   label="Product Name"
   value={draft.name}
@@ -147,7 +149,7 @@
 /></div>
 
 
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid {splitGridStyle} gap-4">
     <div>
       <Tooltip title="The date the product should be listed">
         
@@ -164,11 +166,10 @@
       </Tooltip>
     </div>
     <div />
-    <div />
   </div>
 
 
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid {splitGridStyle} gap-4">
     <div>
       <Tooltip title="The asking price">
         <Field label="Price:" let:id>
@@ -176,15 +177,14 @@
             <Icon data={mdiCurrencyGbp} class="text-surface-content/50 mr-2" />
           </div>
 
-
           <div class="border field-div">
-          <TextField
-          value={draft.price}
-          on:change={(e) => {
-          draft.price = e.detail.value;
-          refresh();
-          }} />
-        </div>
+            <TextField
+            value={draft.price}
+            on:change={(e) => {
+            draft.price = e.detail.value;
+            refresh();
+            }} />
+          </div>
           </Field>
           
       </Tooltip>

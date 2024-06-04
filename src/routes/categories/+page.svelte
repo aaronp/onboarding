@@ -64,7 +64,7 @@
 
 <Toggle let:on={open} let:toggle>
 
-    <div class="grid grid-cols-1 gap-4" >
+    <div class="grid grid-cols-3 gap-4" >
         <Field label="Category" let:id>
             <SelectField {id} {options} on:change={onCategorySelectionChanged} bind:value={selectedCategoryName}>
             <span slot="append" on:click|stopPropagation>
