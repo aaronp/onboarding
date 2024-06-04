@@ -13,13 +13,18 @@ appBackend.subscribe(value => {
     diagram = page.markdown();
 });
 
+function reset() {
+  appBackend.set(service.resetService());
+}
     
 </script>
-  
+<div>
+  <Button variant="fill-outline" size="lg" color="secondary" on:click={reset}>Reset</Button>
+</div>  
 <Mermaid bind:chart={diagram} />
   
 <style>
- .mermaid {
+.mermaid {
   text-align: center;
   margin: 20px 0;
 }   
