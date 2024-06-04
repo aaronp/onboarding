@@ -6,13 +6,15 @@
   import { appBackend } from '$lib/stores/backend.js';
   import { goto } from '$app/navigation';
   import { base } from '$app/paths'
-  import { page } from '$app/stores';
-    
-  const isEdit = $page.url.searchParams.has('id');
-  const editId = $page.url.searchParams.get('id');
 
-  // const urlParams = new URLSearchParams(window.location.search);
-  // const editId = urlParams.has('id');
+  let isEdit = false;
+  let editId = null;
+  if (typeof window !== "undefined") {
+    const urlParams = new URLSearchParams(window.location.search);
+    isEdit = urlParams.has('id');
+    editId = urlParams.get('id');
+  }
+  
 
   let service;
   let thisPage;
@@ -66,8 +68,10 @@
     const response = thisPage.onSaveDraft(draft);
 
     console.log("response: ", response);
-    if (response.result.success) {
+    if (response?.result?.success) {
       goto(`${base}/dashboard`);
+    } else {
+      // TODO - alert / snackbar
     }
 
   }

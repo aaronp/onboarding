@@ -26,8 +26,6 @@
 		const newUserData = event.detail;
 		const result = data.service.createNewUser(JSON.stringify(newUserData));
 
-		console.log('createNewUser ', result);
-
 		// and now log the new user in
 		logUserIn(newUserData.name);
 	}

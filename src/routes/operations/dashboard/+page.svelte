@@ -1,10 +1,7 @@
 <script lang="ts">
-    import { mdiPencil, mdiCancel, mdiAlert, mdiCheck } from '@mdi/js';
+    import { mdiAlert, mdiCheck } from '@mdi/js';
     import { currentUser, appBackend} from '$lib/stores/backend.js';
     import { Shine, ExpansionPanel, Notification, Icon, Button, Card  } from 'svelte-ux';
-    import { goto } from '$app/navigation';
-    import { base } from '$app/paths'
-
   
     let service;
     let thisPage;
