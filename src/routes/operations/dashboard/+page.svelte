@@ -12,7 +12,7 @@
     let drafts = [];
     
     function refreshList() {
-        drafts = thisPage.listUnapprovedDrafts();
+        drafts = thisPage.listApprovedDrafts();
     }
 
     currentUser.subscribe(value => {
@@ -26,17 +26,9 @@
       refreshList();
     });
   
-    function onEdit(draftId) {
-      goto(`${base}/onboard?id=${draftId}`);
-    }
-    function onWithdraw(draftId) {
-      const result = thisPage.withdrawDraft(draftId);
-      console.log("result: ", result);
-      refreshList();
-    }
 
-    function onApprove(draftId) {
-      const result = thisPage.approveDraft(draftId);
+    function onUnapprove(draftId) {
+      const result = thisPage.unapproveDraft(draftId);
       console.log("result: ", result);
       refreshList();
     }
@@ -57,33 +49,33 @@
 
         <div slot="contents" >
             <div class="grid gap-2">
-            <div class="info">Listed for £{draft.data.price}</div>
+            <div class="info">Listed for £{draft.data.price} by {draft.data.ownerUserId}</div>
+            <div class="info">Last updated on {draft.data.lastUpdated}</div>
             </div>
 
-            <ExpansionPanel>
-            <div slot="trigger" class="flex-1 p-3">Detail...</div>
-            <div>
-                <pre>{JSON.stringify(draft, null, 2)}</pre>
+            <div class="grid grid-cols-4 gap-2">
+                <ExpansionPanel>
+                    <div slot="trigger" class="flex-1 p-3">Detail...</div>
+                    <div>
+                        <pre>{JSON.stringify(draft, null, 2)}</pre>
+                    </div>
+                </ExpansionPanel>
             </div>
-            </ExpansionPanel>
             {#if draft.data.withdrawn}
-            <Notification open >
-            <div slot="icon" >
-                <Icon data={mdiAlert} class="text-warning-200" />
+            <div class="grid grid-cols-4 gap-2">
+                <Notification open >
+                    <div slot="icon" >
+                        <Icon data={mdiAlert} class="text-warning-200" />
+                    </div>
+                    <div slot="title" >Withdrawn</div>
+                    <div slot="description" >This product has been withdrawn</div>
+                </Notification>
             </div>
-            <div slot="title" >Withdrawn</div>
-            <div slot="description" >This product has been withdrawn</div>
-            </Notification>
             {/if}
         </div>
         <div slot="actions">
-
-            <Button icon={mdiPencil} variant="fill-outline" size="lg" color="primary" on:click={(e) => onEdit(draft._id)}>Edit</Button>
             {#if draft.data.approved}
-            <Button iconf={mdiCheck} variant="fill" size="lg" color="secondary" on:click={(e) => onApprove(draft._id)}>Unapprove</Button>
-            {/if}
-            {#if !draft.data.withdrawn}
-            <Button iconf={mdiCancel} variant="fill-outline" size="lg" color="secondary" on:click={(e) => onWithdraw(draft._id)}>Withdraw</Button>
+            <Button iconf={mdiCheck} variant="fill" size="lg" color="secondary" on:click={(e) => onUnapprove(draft._id)}>Unapprove</Button>
             {/if}
         
         </div>

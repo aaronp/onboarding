@@ -56,6 +56,8 @@
 </script>
 
 
+<p>selectedCategoryName:{selectedCategoryName}</p>
+
 <div class="grid gap-8">
   <Card title="Update Categories"  subheading="This page allows you to update the categories/subcategories for onboarding."/>
   <div>These categories are for <a href="{ base }/onboard">onboarding new products</a>.</div>
@@ -80,7 +82,7 @@
       </div>
       <div class="grid grid-cols-1 gap-4" >
         <div />
-        {#if page.selectedCategoryName }
+        {#if selectedCategoryName && selectedCategoryName?.length > 0 }
 
             <Form
             initial={data}
