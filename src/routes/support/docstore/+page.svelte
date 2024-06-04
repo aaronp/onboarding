@@ -16,9 +16,9 @@ let currentDB;
 appBackend.subscribe(value => {
     service = value;
     page = service.newDocstorePage();
-    dbFormatted = page.formatted();
-    dbJson = page.jason();
-    saveAsName = service.currentDatabaseName();
+    [dbFormatted, dbJson] = page.dump();
+    const name = service.currentDatabaseName();
+    saveAsName = name
     currentDB = service.currentDatabase();
 });
 
@@ -34,8 +34,10 @@ function saveAs(name) {
 }
 
 function onDbChange(name) {
+  if (name) {
     saveAsName = name;
     [dbFormatted, dbJson] = page.changeDbName(`${name}`);
+  }
 
 }
 
@@ -93,10 +95,10 @@ function reloadServiceFromStorage(name) {
      </div>
      <div >
         <Tooltip title="This will reload the service using the {saveAsName ? saveAsName : "selected"} database">
-            <Button variant="fill-outline" size="lg" color="primary" on:click={(e) => reloadServiceFromStorage(saveAsName)} disabled={!saveAsName} >Load {saveAsName ? saveAsName : ""} Database</Button>
+            <Button variant="fill-outline" size="lg" color="primary" on:click={(e) => reloadServiceFromStorage(saveAsName)} disabled={!saveAsName} >Load "{saveAsName}" Database</Button>
         </Tooltip>
          <Tooltip title="This save the {saveAsName ? saveAsName : "selected"} database">
-             <Button variant="fill-outline" size="lg" color="secondary" on:click={(e) => saveAs(saveAsName)} >Overwrite {saveAsName ? saveAsName : ""}</Button>
+             <Button variant="fill-outline" size="lg" color="secondary" on:click={(e) => saveAs(saveAsName)} >Overwrite "{saveAsName}"</Button>
          </Tooltip>
        </div>
     <div class="border overflow bg-highlight-1" ><pre>{dbFormatted}</pre></div>

@@ -55,8 +55,6 @@
     }
 </script>
 
-<p>selectedCategoryName: {selectedCategoryName}</p>
-
 
 <div class="grid gap-8">
   <Card title="Update Categories"  subheading="This page allows you to update the categories/subcategories for onboarding."/>

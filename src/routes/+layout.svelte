@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { mdiViewDashboard, mdiCreation, mdiMonitorDashboard } from '@mdi/js';
-	import { ThemeSwitch, AppBar, AppLayout, Card, Button, NavItem, Tooltip, settings } from 'svelte-ux';
+	import { mdiViewDashboard, mdiCreation, mdiViewList, mdiViewDashboardOutline } from '@mdi/js';
+	import { ThemeSwitch, AppBar, AppLayout, Button, NavItem, Tooltip, settings } from 'svelte-ux';
     import { currentUser } from '$lib/stores/backend.js';
     import UserDropdown from '$lib/UserDropdown.svelte';
 	import { page } from '$app/stores';
@@ -15,7 +15,6 @@
     });
 
 	onMount(() => {
-		
 		if (!user) {
 			const target = base + '/';
 			if (window.location.pathname != target) {
@@ -88,9 +87,16 @@
 					currentUrl={$page.url} />
 
 					<NavItem
-					path="{base}/operations/dashboard"
+					path="{base}/operations/submissions"
 					text="Product Submissions"
-					icon={mdiMonitorDashboard}
+					icon={mdiViewList}
+					currentUrl={$page.url} />
+
+
+					<NavItem
+					path="{base}/operations/dashboard"
+					text="Approved Products"
+					icon={mdiViewDashboardOutline}
 					currentUrl={$page.url} />
 			{/if}
 
@@ -110,7 +116,7 @@
 		{/if }
 
 		<div class="last-item">
-			<span class="">Theme:</span>
+			<span class="themelabel">Theme:</span>
 			<ThemeSwitch />
 		</div>
 	</svelte:fragment>
@@ -169,7 +175,9 @@ UserDropdown {
  main {
 	padding: 1em;
  }
-
+ .themelabel { 
+	color: white;
+ }
 .last-item {
   position: absolute;
   bottom: 0;

@@ -12,7 +12,7 @@
     let drafts = [];
     
     function refreshList() {
-        drafts = thisPage.listDrafts();
+        drafts = thisPage.listUnapprovedDrafts();
     }
 
     currentUser.subscribe(value => {
@@ -26,9 +26,6 @@
       refreshList();
     });
   
-    function onEdit(draftId) {
-      goto(`${base}/onboard?id=${draftId}`);
-    }
     function onWithdraw(draftId) {
       const result = thisPage.withdrawDraft(draftId);
       console.log("result: ", result);
@@ -46,7 +43,7 @@
 <div class="grid gap-8">
 
 <Shine>
-    <Card title="Approved Products" />
+    <Card title="Submitted (Draft) Products" />
 </Shine>
 
     {#each drafts as draft}
@@ -78,9 +75,8 @@
         </div>
         <div slot="actions">
 
-            <Button icon={mdiPencil} variant="fill-outline" size="lg" color="primary" on:click={(e) => onEdit(draft._id)}>Edit</Button>
-            {#if draft.data.approved}
-            <Button iconf={mdiCheck} variant="fill" size="lg" color="secondary" on:click={(e) => onApprove(draft._id)}>Unapprove</Button>
+            {#if !draft.data.approved}
+            <Button iconf={mdiCheck} variant="fill" size="lg" color="secondary" on:click={(e) => onApprove(draft._id)}>Approve</Button>
             {/if}
             {#if !draft.data.withdrawn}
             <Button iconf={mdiCancel} variant="fill-outline" size="lg" color="secondary" on:click={(e) => onWithdraw(draft._id)}>Withdraw</Button>

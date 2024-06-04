@@ -79,9 +79,6 @@
 
 <Card title="Create a new Product" />
 
-<p>isEdit:{isEdit}, editId:{editId}</p>
-<p>savedProduct:{JSON.stringify(savedProduct)}</p>
-
 <!--
     product-type: drop-down: (e.g. tool, toy, service, etc)
     sub-type: drop-down (e.g. hammer, screwdriver, etc)
@@ -124,23 +121,22 @@
 >
 
 <div class="grid gap-4">
-    <div />
-    <div class="grid grid-cols-2 gap-4">
+    <div/>
+    <div class="grid grid-cols-4 gap-4">
       <Field label="Category" let:id>
         <div class="border field-div" style="border:solid red 2"><SelectField options={categories} bind:value={selectedCategory} clearable={false} /></div>
       </Field>
+    </div>
+    <div class="grid grid-cols-4 gap-4">
       <Field label="Subcategory" let:id>
         <div class="border field-div"><SelectField options={subCategories}  bind:value={selectedSubCategory} clearable={false} /></div>
       </Field>
     </div>
-    <div />
 </div>
  
-
-
 <div class="grid grid-cols-1 gap-4">
-
-  <div>
+  <div />
+  <div class="grid grid-cols-4 gap-4">
   <TextField
   label="Product Name"
   value={draft.name}
@@ -199,9 +195,9 @@
   </div>
 
   <div>
-  <Button variant="fill-outline" size="lg" color="primary" on:click={() => {
+  <Button variant="fill" size="lg" color="primary" on:click={() => {
       saveDraft(draft);
-     }} disabled={current.name == null}
+     }} disabled={current.name == null || selectedCategory == null || selectedSubCategory == null }
     >Save</Button
   >
 </div>
