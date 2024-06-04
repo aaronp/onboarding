@@ -64,7 +64,7 @@
 
 <Toggle let:on={open} let:toggle>
 
-    <div class="grid grid-cols-3 gap-4" >
+    <div class="grid grid-cols-4 gap-4" >
         <Field label="Category" let:id>
             <SelectField {id} {options} on:change={onCategorySelectionChanged} bind:value={selectedCategoryName}>
             <span slot="append" on:click|stopPropagation>
@@ -77,6 +77,9 @@
             </SelectField>
             
         </Field>
+      </div>
+      <div class="grid grid-cols-1 gap-4" >
+        <div />
         {#if page.selectedCategoryName }
 
             <Form
@@ -92,20 +95,7 @@
             let:refresh
         >
 
-        <div class="grid gap-4">
-          {#each subCategories as subCategory}
-          <div>
-            <ListItem title={subCategory} >
-              <div slot="actions">
-                <Button
-                  icon={mdiDelete}
-                  class="text-surface-content/50 p-2"
-                  on:click={removeSubCategory(subCategory)}
-                  />
-                </div>
-            </ListItem>
-          </div>
-          {/each}
+        <div class="grid grid-cols-5 gap-4">
           <div>
             <TextField label="Sub-Category" clearable value={draft.subcategory}
             on:keypress={(e) => {
@@ -120,10 +110,27 @@
            }}>
            </TextField>
           </div>
+          <div>
+            <Button variant="fill-outline" size="lg" color="primary"  on:click={addSubCategory(draft)} disabled={current.subcategory == null}>Add</Button ></div>
         </div>
  
+        <div class="grid justify-start gap-2">
+          <div />
+          {#each subCategories as subCategory}
+          <div>
+            <ListItem title={subCategory} >
+              <div slot="actions">
+                <Button
+                  icon={mdiDelete}
+                  class="text-surface-content/50 p-2"
+                  on:click={removeSubCategory(subCategory)}
+                  />
+                </div>
+            </ListItem>
+          </div>
+          {/each}
+        </div>
                 
-                <Button on:click={addSubCategory(draft)} disabled={current.subcategory == null}>Add</Button >
             </Form>
         {/if}
     </div>
