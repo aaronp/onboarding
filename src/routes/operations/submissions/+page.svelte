@@ -47,7 +47,7 @@
 
         <div slot="contents" >
             <div class="grid gap-2">
-            <div class="info">Listed for £{draft.data.price}</div>
+            <div class="info">Listed for £{draft.data.price} by {draft.data.ownerUserId}</div>
             </div>
 
             <ExpansionPanel>
@@ -68,13 +68,11 @@
         </div>
         <div slot="actions">
 
+            <div class="grid grid-cols-8 gap-2">
             {#if !draft.data.approved}
-            <Button iconf={mdiCheck} variant="fill" size="lg" color="secondary" on:click={(e) => onApprove(draft._id)}>Approve</Button>
+            <Button iconf={mdiCheck} variant="fill-outline" size="md" color="secondary" on:click={(e) => onApprove(draft._id)}>Approve</Button>
             {/if}
-            {#if !draft.data.withdrawn}
-            <Button iconf={mdiCancel} variant="fill-outline" size="lg" color="secondary" on:click={(e) => onWithdraw(draft._id)}>Withdraw</Button>
-            {/if}
-        
+            </div>
         </div>
 
         </Card>

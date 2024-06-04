@@ -54,21 +54,39 @@
               <div class="info">Listed for £{draft.data.price}</div>
             </div>
 
-            <ExpansionPanel>
-              <div slot="trigger" class="flex-1 p-3">Detail...</div>
-              <div>
-                <pre>{JSON.stringify(draft, null, 2)}</pre>
+            {#if draft.data.approved}
+              <div class="grid grid-cols-4 gap-2">
+                <Notification open >
+                  <div slot="icon" >
+                    <Icon data={mdiInformation} />
+                  </div>
+                  <div slot="title" >Live</div>
+                  <div slot="description" >This product was approved at {draft.data.lastUpdated}</div>
+                </Notification>
               </div>
-            </ExpansionPanel>
-            {#if draft.data.withdrawn}
-            <Notification open >
-              <div slot="icon" >
-                <Icon data={mdiAlert} class="text-warning-200" />
-              </div>
-              <div slot="title" >Withdrawn</div>
-              <div slot="description" >This product has been withdrawn</div>
-            </Notification>
             {/if}
+            {#if draft.data.withdrawn}
+            <div class="grid grid-cols-4 gap-2">
+              <Notification open >
+                <div slot="icon" >
+                  <Icon data={mdiAlert} class="text-warning-200" />
+                </div>
+                <div slot="title" >Withdrawn</div>
+                <div slot="description" >This product was withdrawn on {draft.data.lastUpdated}</div>
+              </Notification>
+            </div>
+            {/if}
+
+
+            <div class="grid grid-cols-4 gap-2">
+              <ExpansionPanel>
+                <div slot="trigger" class="flex-1 p-3">Detail...</div>
+                <div>
+                  <pre>{JSON.stringify(draft, null, 2)}</pre>
+                </div>
+              </ExpansionPanel>
+              </div>
+  
           </div>
           <div slot="actions">
 
