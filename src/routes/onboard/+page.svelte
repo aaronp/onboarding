@@ -41,10 +41,6 @@
 
       // the draft in the form is taken from 'data'
       data = savedProduct;
-      // data.name = savedProduct.name;
-      // data.listDate = savedProduct.listDate;
-      // data.endDate = savedProduct.endDate;
-      // data.price = savedProduct.price;
     }
   }
 
@@ -66,6 +62,7 @@
     draft.category = selectedCategory;
     draft.subCategory = selectedSubCategory;
     draft.ownerUserId = user.name;
+    draft.id = data.id;
     const response = thisPage.onSaveDraft(draft);
 
     console.log("response: ", response);
